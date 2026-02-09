@@ -1,7 +1,7 @@
 package sentinel
 
 import (
-	"github.com/stainless-sdks/anagrama-go/internal/encoding/json/shims"
+	"github.com/AnagramaGames/anagrama-go/internal/encoding/json/shims"
 	"reflect"
 	"sync"
 )

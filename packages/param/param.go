@@ -2,7 +2,7 @@ package param
 
 import (
 	"encoding/json"
-	"github.com/stainless-sdks/anagrama-go/internal/encoding/json/sentinel"
+	"github.com/AnagramaGames/anagrama-go/internal/encoding/json/sentinel"
 	"reflect"
 )
 
