@@ -1,8 +1,8 @@
 package sentinel_test
 
 import (
-	"github.com/AnagramaGames/anagrama-go/internal/encoding/json/sentinel"
-	"github.com/AnagramaGames/anagrama-go/packages/param"
+	"github.com/stainless-sdks/anagrama-go/internal/encoding/json/sentinel"
+	"github.com/stainless-sdks/anagrama-go/packages/param"
 	"reflect"
 	"slices"
 	"testing"

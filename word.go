@@ -9,12 +9,12 @@ import (
 	"slices"
 	"time"
 
-	"github.com/AnagramaGames/anagrama-go/internal/apijson"
-	"github.com/AnagramaGames/anagrama-go/internal/apiquery"
-	"github.com/AnagramaGames/anagrama-go/internal/requestconfig"
-	"github.com/AnagramaGames/anagrama-go/option"
-	"github.com/AnagramaGames/anagrama-go/packages/param"
-	"github.com/AnagramaGames/anagrama-go/packages/respjson"
+	"github.com/stainless-sdks/anagrama-go/internal/apijson"
+	"github.com/stainless-sdks/anagrama-go/internal/apiquery"
+	"github.com/stainless-sdks/anagrama-go/internal/requestconfig"
+	"github.com/stainless-sdks/anagrama-go/option"
+	"github.com/stainless-sdks/anagrama-go/packages/param"
+	"github.com/stainless-sdks/anagrama-go/packages/respjson"
 )
 
 // WordService contains methods and other services that help with interacting with
@@ -42,7 +42,7 @@ func NewWordService(opts ...option.RequestOption) (r WordService) {
 // as a Bearer token. Subject to daily rate limiting (1,000 requests/day).
 func (r *WordService) GetDaily(ctx context.Context, opts ...option.RequestOption) (res *WordGetDailyResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	path := "api/v1/words/daily"
+	path := "v1/words/daily"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -52,7 +52,7 @@ func (r *WordService) GetDaily(ctx context.Context, opts ...option.RequestOption
 // rate limiting (1,000 requests/day).
 func (r *WordService) GetRandom(ctx context.Context, query WordGetRandomParams, opts ...option.RequestOption) (res *WordGetRandomResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	path := "api/v1/words/random"
+	path := "v1/words/random"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }

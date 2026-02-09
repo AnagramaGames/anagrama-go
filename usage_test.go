@@ -7,9 +7,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/AnagramaGames/anagrama-go"
-	"github.com/AnagramaGames/anagrama-go/internal/testutil"
-	"github.com/AnagramaGames/anagrama-go/option"
+	"github.com/stainless-sdks/anagrama-go"
+	"github.com/stainless-sdks/anagrama-go/internal/testutil"
+	"github.com/stainless-sdks/anagrama-go/option"
 )
 
 func TestUsage(t *testing.T) {
