@@ -34,15 +34,14 @@ func NewCliAuthService(opts ...option.RequestOption) (r CliAuthService) {
 }
 
 // Called by the web application after the user approves the CLI authentication
-// request. This endpoint requires a valid Clerk session (browser cookie-based
-// auth) and is not intended for direct SDK use.
+// request. This endpoint requires a valid Anagrama web session (browser
+// cookie-based auth) and is not intended for direct SDK use.
 //
 // Approves the pending session identified by `deviceCode` or `userCode`, generates
 // an API token, and stores it. The CLI can then retrieve the token by polling
 // `/cli/auth/poll`.
 func (r *CliAuthService) Complete(ctx context.Context, body CliAuthCompleteParams, opts ...option.RequestOption) (res *CliAuthCompleteResponse, err error) {
-	var preClientOpts = []option.RequestOption{requestconfig.WithSecurity(requestconfig.Security{})}
-	opts = slices.Concat(preClientOpts, r.Options, opts)
+	opts = slices.Concat(r.Options, opts)
 	path := "cli/auth/complete"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

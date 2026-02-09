@@ -51,7 +51,7 @@ func (r *WordsetService) Get(ctx context.Context, wordsetID string, query Wordse
 		err = errors.New("missing required wordsetId parameter")
 		return
 	}
-	path := fmt.Sprintf("api/v1/wordsets/%s", url.PathEscape(wordsetID))
+	path := fmt.Sprintf("v1/wordsets/%s", url.PathEscape(wordsetID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }

@@ -42,7 +42,7 @@ func NewWordService(opts ...option.RequestOption) (r WordService) {
 // as a Bearer token. Subject to daily rate limiting (1,000 requests/day).
 func (r *WordService) GetDaily(ctx context.Context, opts ...option.RequestOption) (res *WordGetDailyResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	path := "api/v1/words/daily"
+	path := "v1/words/daily"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -52,7 +52,7 @@ func (r *WordService) GetDaily(ctx context.Context, opts ...option.RequestOption
 // rate limiting (1,000 requests/day).
 func (r *WordService) GetRandom(ctx context.Context, query WordGetRandomParams, opts ...option.RequestOption) (res *WordGetRandomResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	path := "api/v1/words/random"
+	path := "v1/words/random"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }
