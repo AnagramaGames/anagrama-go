@@ -18,6 +18,12 @@ func ValueOf[T Constant[T]]() T {
 	return t.Default()
 }
 
+type Approved string // Always "approved"
+
+func (c Approved) Default() Approved { return "approved" }
+
+func (c Approved) MarshalJSON() ([]byte, error) { return marshalString(c) }
+
 type constant[T any] interface {
 	Constant[T]
 	*T

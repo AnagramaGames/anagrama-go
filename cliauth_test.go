@@ -27,10 +27,8 @@ func TestCliAuthCompleteWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Cli.Auth.Complete(context.TODO(), anagramasdk.CliAuthCompleteParams{
-		BodyDeviceCode1: anagramasdk.String("device_code"),
-		BodyDeviceCode2: anagramasdk.String("dvc_a1b2c3d4e5f6"),
-		BodyUserCode1:   anagramasdk.String("user_code"),
-		BodyUserCode2:   anagramasdk.String("ABCD-1234"),
+		DeviceCode: anagramasdk.String("dvc_a1b2c3d4e5f6"),
+		UserCode:   anagramasdk.String("ABCD-1234"),
 	})
 	if err != nil {
 		var apierr *anagramasdk.Error
@@ -55,10 +53,8 @@ func TestCliAuthPollWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Cli.Auth.Poll(context.TODO(), anagramasdk.CliAuthPollParams{
-		BodyDeviceCode1: anagramasdk.String("dvc_a1b2c3d4e5f6"),
-		BodyDeviceCode2: anagramasdk.String("deviceCode"),
-		BodyUserCode1:   anagramasdk.String("user_code"),
-		BodyUserCode2:   anagramasdk.String("userCode"),
+		DeviceCode: anagramasdk.String("dvc_a1b2c3d4e5f6"),
+		UserCode:   anagramasdk.String("user_code"),
 	})
 	if err != nil {
 		var apierr *anagramasdk.Error
