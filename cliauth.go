@@ -41,8 +41,7 @@ func NewCliAuthService(opts ...option.RequestOption) (r CliAuthService) {
 // an API token, and stores it. The CLI can then retrieve the token by polling
 // `/cli/auth/poll`.
 func (r *CliAuthService) Complete(ctx context.Context, body CliAuthCompleteParams, opts ...option.RequestOption) (res *CliAuthCompleteResponse, err error) {
-	var preClientOpts = []option.RequestOption{requestconfig.WithSecurity(requestconfig.Security{})}
-	opts = slices.Concat(preClientOpts, r.Options, opts)
+	opts = slices.Concat(r.Options, opts)
 	path := "cli/auth/complete"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
