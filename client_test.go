@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stainless-sdks/anagrama-go"
-	"github.com/stainless-sdks/anagrama-go/internal"
-	"github.com/stainless-sdks/anagrama-go/option"
+	"github.com/AnagramaGames/anagrama-go"
+	"github.com/AnagramaGames/anagrama-go/internal"
+	"github.com/AnagramaGames/anagrama-go/option"
 )
 
 type closureTransport struct {

@@ -1,7 +1,7 @@
 package apijson
 
 import (
-	"github.com/stainless-sdks/anagrama-go/packages/respjson"
+	"github.com/AnagramaGames/anagrama-go/packages/respjson"
 	"reflect"
 )
 
