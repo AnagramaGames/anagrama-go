@@ -3,7 +3,7 @@ package param
 import (
 	"encoding/json"
 	"fmt"
-	shimjson "github.com/stainless-sdks/anagrama-go/internal/encoding/json"
+	shimjson "github.com/AnagramaGames/anagrama-go/internal/encoding/json"
 	"time"
 )
 
