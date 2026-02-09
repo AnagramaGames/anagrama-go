@@ -25,14 +25,13 @@ func TestUsage(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	t.Skip("Prism tests are disabled")
-	pet, err := client.Pet.Update(context.TODO(), anagrama.PetUpdateParams{
-		Pet: anagrama.PetParam{
-			Name:      "doggie",
-			PhotoURLs: []string{"string"},
-		},
+	response, err := client.Words.GetRandom(context.TODO(), anagrama.WordGetRandomParams{
+		Count:     anagrama.Int(3),
+		MaxLength: anagrama.Int(8),
+		MinLength: anagrama.Int(5),
 	})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
-	t.Logf("%+v\n", pet.ID)
+	t.Logf("%+v\n", response.Count)
 }
