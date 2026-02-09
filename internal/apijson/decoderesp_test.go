@@ -2,8 +2,8 @@ package apijson_test
 
 import (
 	"encoding/json"
-	"github.com/stainless-sdks/anagrama-go/internal/apijson"
-	"github.com/stainless-sdks/anagrama-go/packages/respjson"
+	"github.com/AnagramaGames/anagrama-go/internal/apijson"
+	"github.com/AnagramaGames/anagrama-go/packages/respjson"
 	"testing"
 )
 
