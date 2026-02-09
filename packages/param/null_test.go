@@ -2,7 +2,7 @@ package param_test
 
 import (
 	"encoding/json"
-	"github.com/stainless-sdks/anagrama-go/packages/param"
+	"github.com/AnagramaGames/anagrama-go/packages/param"
 	"testing"
 )
 
