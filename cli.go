@@ -3,7 +3,7 @@
 package anagramasdk
 
 import (
-	"github.com/AnagramaGames/anagrama-go/option"
+	"github.com/stainless-sdks/anagrama-go/option"
 )
 
 // CliService contains methods and other services that help with interacting with

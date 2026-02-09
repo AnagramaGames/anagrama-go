@@ -1,8 +1,8 @@
 package paramutil
 
 import (
-	"github.com/AnagramaGames/anagrama-go/packages/param"
-	"github.com/AnagramaGames/anagrama-go/packages/respjson"
+	"github.com/stainless-sdks/anagrama-go/packages/param"
+	"github.com/stainless-sdks/anagrama-go/packages/respjson"
 )
 
 func AddrIfPresent[T comparable](v param.Opt[T]) *T {
