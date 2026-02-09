@@ -12,6 +12,7 @@ import (
 	"github.com/AnagramaGames/anagrama-go/option"
 	"github.com/AnagramaGames/anagrama-go/packages/param"
 	"github.com/AnagramaGames/anagrama-go/packages/respjson"
+	"github.com/AnagramaGames/anagrama-go/shared/constant"
 )
 
 // CliAuthService contains methods and other services that help with interacting
@@ -81,9 +82,7 @@ type CliAuthCompleteResponse struct {
 	// Always `true` on success.
 	Ok bool `json:"ok,required"`
 	// The resulting session status.
-	//
-	// Any of "approved".
-	Status CliAuthCompleteResponseStatus `json:"status,required"`
+	Status constant.Approved `json:"status,required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Ok          respjson.Field
@@ -99,21 +98,12 @@ func (r *CliAuthCompleteResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The resulting session status.
-type CliAuthCompleteResponseStatus string
-
-const (
-	CliAuthCompleteResponseStatusApproved CliAuthCompleteResponseStatus = "approved"
-)
-
 type CliAuthPollResponse struct {
 	// The API token (prefixed with `cli_`). Store this securely and use it as a Bearer
 	// token for authenticated API calls.
 	Token string `json:"token,required"`
 	// The session status. Always `"approved"` for a 200 response.
-	//
-	// Any of "approved".
-	Status CliAuthPollResponseStatus `json:"status,required"`
+	Status constant.Approved `json:"status,required"`
 	// Basic profile information for the authenticated user.
 	User CliAuthPollResponseUser `json:"user,required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -131,13 +121,6 @@ func (r CliAuthPollResponse) RawJSON() string { return r.JSON.raw }
 func (r *CliAuthPollResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// The session status. Always `"approved"` for a 200 response.
-type CliAuthPollResponseStatus string
-
-const (
-	CliAuthPollResponseStatusApproved CliAuthPollResponseStatus = "approved"
-)
 
 // Basic profile information for the authenticated user.
 type CliAuthPollResponseUser struct {
@@ -198,14 +181,10 @@ func (r *CliAuthStartResponse) UnmarshalJSON(data []byte) error {
 }
 
 type CliAuthCompleteParams struct {
-	// Alias for `deviceCode` (snake_case variant).
-	BodyDeviceCode1 param.Opt[string] `json:"device_code,omitzero"`
 	// The device code from the authentication session.
-	BodyDeviceCode2 param.Opt[string] `json:"deviceCode,omitzero"`
-	// Alias for `userCode` (snake_case variant).
-	BodyUserCode1 param.Opt[string] `json:"user_code,omitzero"`
+	DeviceCode param.Opt[string] `json:"device_code,omitzero"`
 	// The user code from the authentication session.
-	BodyUserCode2 param.Opt[string] `json:"userCode,omitzero"`
+	UserCode param.Opt[string] `json:"user_code,omitzero"`
 	paramObj
 }
 
@@ -219,13 +198,9 @@ func (r *CliAuthCompleteParams) UnmarshalJSON(data []byte) error {
 
 type CliAuthPollParams struct {
 	// The device code returned from `/cli/auth/start`.
-	BodyDeviceCode1 param.Opt[string] `json:"device_code,omitzero"`
-	// Alias for `device_code` (camelCase variant).
-	BodyDeviceCode2 param.Opt[string] `json:"deviceCode,omitzero"`
+	DeviceCode param.Opt[string] `json:"device_code,omitzero"`
 	// The user code returned from `/cli/auth/start`.
-	BodyUserCode1 param.Opt[string] `json:"user_code,omitzero"`
-	// Alias for `user_code` (camelCase variant).
-	BodyUserCode2 param.Opt[string] `json:"userCode,omitzero"`
+	UserCode param.Opt[string] `json:"user_code,omitzero"`
 	paramObj
 }
 
