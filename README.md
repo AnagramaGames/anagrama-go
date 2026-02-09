@@ -6,7 +6,7 @@
 
 <!-- x-release-please-end -->
 
-The Anagrama Go library provides convenient access to the Anagrama REST API
+The Anagrama Go library provides convenient access to the [Anagrama REST API](https://playanagrama.com/docs)
 from applications written in Go.
 
 It is generated with [Stainless](https://www.stainless.com/).
@@ -48,16 +48,15 @@ func main() {
 	client := anagrama.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("ANAGRAMA_API_KEY")
 	)
-	pet, err := client.Pet.Update(context.TODO(), anagrama.PetUpdateParams{
-		Pet: anagrama.PetParam{
-			Name:      "doggie",
-			PhotoURLs: []string{"string"},
-		},
+	response, err := client.Words.GetRandom(context.TODO(), anagrama.WordGetRandomParams{
+		Count:     anagrama.Int(3),
+		MaxLength: anagrama.Int(8),
+		MinLength: anagrama.Int(5),
 	})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", pet.ID)
+	fmt.Printf("%+v\n", response.Count)
 }
 
 ```
@@ -263,7 +262,7 @@ client := anagrama.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Pet.Update(context.TODO(), ...,
+client.Words.GetRandom(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -294,11 +293,10 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Pet.Update(context.TODO(), anagrama.PetUpdateParams{
-	Pet: anagrama.PetParam{
-		Name:      "doggie",
-		PhotoURLs: []string{"string"},
-	},
+_, err := client.Words.GetRandom(context.TODO(), anagrama.WordGetRandomParams{
+	Count:     anagrama.Int(3),
+	MaxLength: anagrama.Int(8),
+	MinLength: anagrama.Int(5),
 })
 if err != nil {
 	var apierr *anagrama.Error
@@ -306,7 +304,7 @@ if err != nil {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
 	}
-	panic(err.Error()) // GET "/pet": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/api/v1/words/random": 400 Bad Request { ... }
 }
 ```
 
@@ -324,13 +322,12 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Pet.Update(
+client.Words.GetRandom(
 	ctx,
-	anagrama.PetUpdateParams{
-		Pet: anagrama.PetParam{
-			Name:      "doggie",
-			PhotoURLs: []string{"string"},
-		},
+	anagrama.WordGetRandomParams{
+		Count:     anagrama.Int(3),
+		MaxLength: anagrama.Int(8),
+		MinLength: anagrama.Int(5),
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -365,13 +362,12 @@ client := anagrama.NewClient(
 )
 
 // Override per-request:
-client.Pet.Update(
+client.Words.GetRandom(
 	context.TODO(),
-	anagrama.PetUpdateParams{
-		Pet: anagrama.PetParam{
-			Name:      "doggie",
-			PhotoURLs: []string{"string"},
-		},
+	anagrama.WordGetRandomParams{
+		Count:     anagrama.Int(3),
+		MaxLength: anagrama.Int(8),
+		MinLength: anagrama.Int(5),
 	},
 	option.WithMaxRetries(5),
 )
@@ -385,20 +381,19 @@ you need to examine response headers, status codes, or other details.
 ```go
 // Create a variable to store the HTTP response
 var response *http.Response
-pet, err := client.Pet.Update(
+response, err := client.Words.GetRandom(
 	context.TODO(),
-	anagrama.PetUpdateParams{
-		Pet: anagrama.PetParam{
-			Name:      "doggie",
-			PhotoURLs: []string{"string"},
-		},
+	anagrama.WordGetRandomParams{
+		Count:     anagrama.Int(3),
+		MaxLength: anagrama.Int(8),
+		MinLength: anagrama.Int(5),
 	},
 	option.WithResponseInto(&response),
 )
 if err != nil {
 	// handle error
 }
-fmt.Printf("%+v\n", pet)
+fmt.Printf("%+v\n", response)
 
 fmt.Printf("Status Code: %d\n", response.StatusCode)
 fmt.Printf("Headers: %+#v\n", response.Header)

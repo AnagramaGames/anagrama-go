@@ -38,11 +38,10 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Pet.Update(context.Background(), anagrama.PetUpdateParams{
-		Pet: anagrama.PetParam{
-			Name:      "doggie",
-			PhotoURLs: []string{"string"},
-		},
+	client.Words.GetRandom(context.Background(), anagrama.WordGetRandomParams{
+		Count:     anagrama.Int(3),
+		MaxLength: anagrama.Int(8),
+		MinLength: anagrama.Int(5),
 	})
 	if userAgent != fmt.Sprintf("Anagrama/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
@@ -67,11 +66,10 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Pet.Update(context.Background(), anagrama.PetUpdateParams{
-		Pet: anagrama.PetParam{
-			Name:      "doggie",
-			PhotoURLs: []string{"string"},
-		},
+	_, err := client.Words.GetRandom(context.Background(), anagrama.WordGetRandomParams{
+		Count:     anagrama.Int(3),
+		MaxLength: anagrama.Int(8),
+		MinLength: anagrama.Int(5),
 	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
@@ -107,11 +105,10 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeaderDel("X-Stainless-Retry-Count"),
 	)
-	_, err := client.Pet.Update(context.Background(), anagrama.PetUpdateParams{
-		Pet: anagrama.PetParam{
-			Name:      "doggie",
-			PhotoURLs: []string{"string"},
-		},
+	_, err := client.Words.GetRandom(context.Background(), anagrama.WordGetRandomParams{
+		Count:     anagrama.Int(3),
+		MaxLength: anagrama.Int(8),
+		MinLength: anagrama.Int(5),
 	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
@@ -142,11 +139,10 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeader("X-Stainless-Retry-Count", "42"),
 	)
-	_, err := client.Pet.Update(context.Background(), anagrama.PetUpdateParams{
-		Pet: anagrama.PetParam{
-			Name:      "doggie",
-			PhotoURLs: []string{"string"},
-		},
+	_, err := client.Words.GetRandom(context.Background(), anagrama.WordGetRandomParams{
+		Count:     anagrama.Int(3),
+		MaxLength: anagrama.Int(8),
+		MinLength: anagrama.Int(5),
 	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
@@ -176,11 +172,10 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Pet.Update(context.Background(), anagrama.PetUpdateParams{
-		Pet: anagrama.PetParam{
-			Name:      "doggie",
-			PhotoURLs: []string{"string"},
-		},
+	_, err := client.Words.GetRandom(context.Background(), anagrama.WordGetRandomParams{
+		Count:     anagrama.Int(3),
+		MaxLength: anagrama.Int(8),
+		MinLength: anagrama.Int(5),
 	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
@@ -204,11 +199,10 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	_, err := client.Pet.Update(cancelCtx, anagrama.PetUpdateParams{
-		Pet: anagrama.PetParam{
-			Name:      "doggie",
-			PhotoURLs: []string{"string"},
-		},
+	_, err := client.Words.GetRandom(cancelCtx, anagrama.WordGetRandomParams{
+		Count:     anagrama.Int(3),
+		MaxLength: anagrama.Int(8),
+		MinLength: anagrama.Int(5),
 	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
@@ -229,11 +223,10 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	_, err := client.Pet.Update(cancelCtx, anagrama.PetUpdateParams{
-		Pet: anagrama.PetParam{
-			Name:      "doggie",
-			PhotoURLs: []string{"string"},
-		},
+	_, err := client.Words.GetRandom(cancelCtx, anagrama.WordGetRandomParams{
+		Count:     anagrama.Int(3),
+		MaxLength: anagrama.Int(8),
+		MinLength: anagrama.Int(5),
 	})
 	if err == nil {
 		t.Error("expected there to be a cancel error")
@@ -260,11 +253,10 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		_, err := client.Pet.Update(deadlineCtx, anagrama.PetUpdateParams{
-			Pet: anagrama.PetParam{
-				Name:      "doggie",
-				PhotoURLs: []string{"string"},
-			},
+		_, err := client.Words.GetRandom(deadlineCtx, anagrama.WordGetRandomParams{
+			Count:     anagrama.Int(3),
+			MaxLength: anagrama.Int(8),
+			MinLength: anagrama.Int(5),
 		})
 		if err == nil {
 			t.Error("expected there to be a deadline error")
