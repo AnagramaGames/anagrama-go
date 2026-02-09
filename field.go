@@ -1,4 +1,4 @@
-package anagrama
+package anagramasdk
 
 import (
 	"github.com/AnagramaGames/anagrama-go/packages/param"

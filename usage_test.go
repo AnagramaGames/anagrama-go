@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package anagrama_test
+package anagramasdk_test
 
 import (
 	"context"
@@ -20,15 +20,15 @@ func TestUsage(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := anagrama.NewClient(
+	client := anagramasdk.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
 	t.Skip("Prism tests are disabled")
-	response, err := client.Words.GetRandom(context.TODO(), anagrama.WordGetRandomParams{
-		Count:     anagrama.Int(3),
-		MaxLength: anagrama.Int(8),
-		MinLength: anagrama.Int(5),
+	response, err := client.Words.GetRandom(context.TODO(), anagramasdk.WordGetRandomParams{
+		Count:     anagramasdk.Int(3),
+		MaxLength: anagramasdk.Int(8),
+		MinLength: anagramasdk.Int(5),
 	})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())

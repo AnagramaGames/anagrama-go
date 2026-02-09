@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package anagrama_test
+package anagramasdk_test
 
 import (
 	"context"
@@ -22,13 +22,13 @@ func TestWordGetDaily(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := anagrama.NewClient(
+	client := anagramasdk.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Words.GetDaily(context.TODO())
 	if err != nil {
-		var apierr *anagrama.Error
+		var apierr *anagramasdk.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}
@@ -45,17 +45,17 @@ func TestWordGetRandomWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := anagrama.NewClient(
+	client := anagramasdk.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Words.GetRandom(context.TODO(), anagrama.WordGetRandomParams{
-		Count:     anagrama.Int(1),
-		MaxLength: anagrama.Int(3),
-		MinLength: anagrama.Int(3),
+	_, err := client.Words.GetRandom(context.TODO(), anagramasdk.WordGetRandomParams{
+		Count:     anagramasdk.Int(1),
+		MaxLength: anagramasdk.Int(3),
+		MinLength: anagramasdk.Int(3),
 	})
 	if err != nil {
-		var apierr *anagrama.Error
+		var apierr *anagramasdk.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}

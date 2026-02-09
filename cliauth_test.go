@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package anagrama_test
+package anagramasdk_test
 
 import (
 	"context"
@@ -22,18 +22,18 @@ func TestCliAuthCompleteWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := anagrama.NewClient(
+	client := anagramasdk.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Cli.Auth.Complete(context.TODO(), anagrama.CliAuthCompleteParams{
-		BodyDeviceCode1: anagrama.String("device_code"),
-		BodyDeviceCode2: anagrama.String("dvc_a1b2c3d4e5f6"),
-		BodyUserCode1:   anagrama.String("user_code"),
-		BodyUserCode2:   anagrama.String("ABCD-1234"),
+	_, err := client.Cli.Auth.Complete(context.TODO(), anagramasdk.CliAuthCompleteParams{
+		BodyDeviceCode1: anagramasdk.String("device_code"),
+		BodyDeviceCode2: anagramasdk.String("dvc_a1b2c3d4e5f6"),
+		BodyUserCode1:   anagramasdk.String("user_code"),
+		BodyUserCode2:   anagramasdk.String("ABCD-1234"),
 	})
 	if err != nil {
-		var apierr *anagrama.Error
+		var apierr *anagramasdk.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}
@@ -50,18 +50,18 @@ func TestCliAuthPollWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := anagrama.NewClient(
+	client := anagramasdk.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Cli.Auth.Poll(context.TODO(), anagrama.CliAuthPollParams{
-		BodyDeviceCode1: anagrama.String("dvc_a1b2c3d4e5f6"),
-		BodyDeviceCode2: anagrama.String("deviceCode"),
-		BodyUserCode1:   anagrama.String("user_code"),
-		BodyUserCode2:   anagrama.String("userCode"),
+	_, err := client.Cli.Auth.Poll(context.TODO(), anagramasdk.CliAuthPollParams{
+		BodyDeviceCode1: anagramasdk.String("dvc_a1b2c3d4e5f6"),
+		BodyDeviceCode2: anagramasdk.String("deviceCode"),
+		BodyUserCode1:   anagramasdk.String("user_code"),
+		BodyUserCode2:   anagramasdk.String("userCode"),
 	})
 	if err != nil {
-		var apierr *anagrama.Error
+		var apierr *anagramasdk.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}
@@ -78,16 +78,16 @@ func TestCliAuthStartWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := anagrama.NewClient(
+	client := anagramasdk.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Cli.Auth.Start(context.TODO(), anagrama.CliAuthStartParams{
-		ClientName: anagrama.String("anagrama-cli"),
-		Label:      anagrama.String("My MacBook Pro"),
+	_, err := client.Cli.Auth.Start(context.TODO(), anagramasdk.CliAuthStartParams{
+		ClientName: anagramasdk.String("anagrama-cli"),
+		Label:      anagramasdk.String("My MacBook Pro"),
 	})
 	if err != nil {
-		var apierr *anagrama.Error
+		var apierr *anagramasdk.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}

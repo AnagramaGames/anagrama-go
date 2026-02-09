@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package anagrama_test
+package anagramasdk_test
 
 import (
 	"context"
@@ -22,24 +22,24 @@ func TestWordsetGetWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := anagrama.NewClient(
+	client := anagramasdk.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Wordsets.Get(
 		context.TODO(),
 		"ws__6fxAv1b",
-		anagrama.WordsetGetParams{
-			Category:  anagrama.String("category"),
-			Limit:     anagrama.Int(1),
-			MaxLength: anagrama.Int(1),
-			MinLength: anagrama.Int(1),
-			Random:    anagrama.WordsetGetParamsRandomTrue,
-			Scramble:  anagrama.WordsetGetParamsScrambleTrue,
+		anagramasdk.WordsetGetParams{
+			Category:  anagramasdk.String("category"),
+			Limit:     anagramasdk.Int(1),
+			MaxLength: anagramasdk.Int(1),
+			MinLength: anagramasdk.Int(1),
+			Random:    anagramasdk.WordsetGetParamsRandomTrue,
+			Scramble:  anagramasdk.WordsetGetParamsScrambleTrue,
 		},
 	)
 	if err != nil {
-		var apierr *anagrama.Error
+		var apierr *anagramasdk.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}
