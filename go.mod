@@ -1,4 +1,4 @@
-module github.com/stainless-sdks/anagrama-go
+module github.com/AnagramaGames/anagrama-go
 
 go 1.22
 

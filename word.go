@@ -9,12 +9,12 @@ import (
 	"slices"
 	"time"
 
-	"github.com/stainless-sdks/anagrama-go/internal/apijson"
-	"github.com/stainless-sdks/anagrama-go/internal/apiquery"
-	"github.com/stainless-sdks/anagrama-go/internal/requestconfig"
-	"github.com/stainless-sdks/anagrama-go/option"
-	"github.com/stainless-sdks/anagrama-go/packages/param"
-	"github.com/stainless-sdks/anagrama-go/packages/respjson"
+	"github.com/AnagramaGames/anagrama-go/internal/apijson"
+	"github.com/AnagramaGames/anagrama-go/internal/apiquery"
+	"github.com/AnagramaGames/anagrama-go/internal/requestconfig"
+	"github.com/AnagramaGames/anagrama-go/option"
+	"github.com/AnagramaGames/anagrama-go/packages/param"
+	"github.com/AnagramaGames/anagrama-go/packages/respjson"
 )
 
 // WordService contains methods and other services that help with interacting with
