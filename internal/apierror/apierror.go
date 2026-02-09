@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"net/http/httputil"
 
-	"github.com/stainless-sdks/anagrama-go/internal/apijson"
-	"github.com/stainless-sdks/anagrama-go/packages/respjson"
+	"github.com/AnagramaGames/anagrama-go/internal/apijson"
+	"github.com/AnagramaGames/anagrama-go/packages/respjson"
 )
 
 // Error represents an error that originates from the API, i.e. when a request is

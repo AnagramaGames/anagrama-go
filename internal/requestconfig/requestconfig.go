@@ -18,10 +18,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/stainless-sdks/anagrama-go/internal"
-	"github.com/stainless-sdks/anagrama-go/internal/apierror"
-	"github.com/stainless-sdks/anagrama-go/internal/apiform"
-	"github.com/stainless-sdks/anagrama-go/internal/apiquery"
+	"github.com/AnagramaGames/anagrama-go/internal"
+	"github.com/AnagramaGames/anagrama-go/internal/apierror"
+	"github.com/AnagramaGames/anagrama-go/internal/apiform"
+	"github.com/AnagramaGames/anagrama-go/internal/apiquery"
 )
 
 func getDefaultHeaders() map[string]string {
