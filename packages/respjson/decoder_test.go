@@ -3,8 +3,8 @@ package respjson_test
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/AnagramaGames/anagrama-go/internal/apijson"
-	rj "github.com/AnagramaGames/anagrama-go/packages/respjson"
+	"github.com/stainless-sdks/anagrama-go/internal/apijson"
+	rj "github.com/stainless-sdks/anagrama-go/packages/respjson"
 	"reflect"
 	"testing"
 )

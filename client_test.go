@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package anagrama_test
+package anagramasdk_test
 
 import (
 	"context"
@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/AnagramaGames/anagrama-go"
-	"github.com/AnagramaGames/anagrama-go/internal"
-	"github.com/AnagramaGames/anagrama-go/option"
+	"github.com/stainless-sdks/anagrama-go"
+	"github.com/stainless-sdks/anagrama-go/internal"
+	"github.com/stainless-sdks/anagrama-go/option"
 )
 
 type closureTransport struct {
@@ -25,7 +25,7 @@ func (t *closureTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 
 func TestUserAgentHeader(t *testing.T) {
 	var userAgent string
-	client := anagrama.NewClient(
+	client := anagramasdk.NewClient(
 		option.WithAPIKey("My API Key"),
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
@@ -38,10 +38,10 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Words.GetRandom(context.Background(), anagrama.WordGetRandomParams{
-		Count:     anagrama.Int(3),
-		MaxLength: anagrama.Int(8),
-		MinLength: anagrama.Int(5),
+	client.Words.GetRandom(context.Background(), anagramasdk.WordGetRandomParams{
+		Count:     anagramasdk.Int(3),
+		MaxLength: anagramasdk.Int(8),
+		MinLength: anagramasdk.Int(5),
 	})
 	if userAgent != fmt.Sprintf("Anagrama/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
@@ -50,7 +50,7 @@ func TestUserAgentHeader(t *testing.T) {
 
 func TestRetryAfter(t *testing.T) {
 	retryCountHeaders := make([]string, 0)
-	client := anagrama.NewClient(
+	client := anagramasdk.NewClient(
 		option.WithAPIKey("My API Key"),
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
@@ -66,10 +66,10 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Words.GetRandom(context.Background(), anagrama.WordGetRandomParams{
-		Count:     anagrama.Int(3),
-		MaxLength: anagrama.Int(8),
-		MinLength: anagrama.Int(5),
+	_, err := client.Words.GetRandom(context.Background(), anagramasdk.WordGetRandomParams{
+		Count:     anagramasdk.Int(3),
+		MaxLength: anagramasdk.Int(8),
+		MinLength: anagramasdk.Int(5),
 	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
@@ -88,7 +88,7 @@ func TestRetryAfter(t *testing.T) {
 
 func TestDeleteRetryCountHeader(t *testing.T) {
 	retryCountHeaders := make([]string, 0)
-	client := anagrama.NewClient(
+	client := anagramasdk.NewClient(
 		option.WithAPIKey("My API Key"),
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
@@ -105,10 +105,10 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeaderDel("X-Stainless-Retry-Count"),
 	)
-	_, err := client.Words.GetRandom(context.Background(), anagrama.WordGetRandomParams{
-		Count:     anagrama.Int(3),
-		MaxLength: anagrama.Int(8),
-		MinLength: anagrama.Int(5),
+	_, err := client.Words.GetRandom(context.Background(), anagramasdk.WordGetRandomParams{
+		Count:     anagramasdk.Int(3),
+		MaxLength: anagramasdk.Int(8),
+		MinLength: anagramasdk.Int(5),
 	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
@@ -122,7 +122,7 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 
 func TestOverwriteRetryCountHeader(t *testing.T) {
 	retryCountHeaders := make([]string, 0)
-	client := anagrama.NewClient(
+	client := anagramasdk.NewClient(
 		option.WithAPIKey("My API Key"),
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
@@ -139,10 +139,10 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeader("X-Stainless-Retry-Count", "42"),
 	)
-	_, err := client.Words.GetRandom(context.Background(), anagrama.WordGetRandomParams{
-		Count:     anagrama.Int(3),
-		MaxLength: anagrama.Int(8),
-		MinLength: anagrama.Int(5),
+	_, err := client.Words.GetRandom(context.Background(), anagramasdk.WordGetRandomParams{
+		Count:     anagramasdk.Int(3),
+		MaxLength: anagramasdk.Int(8),
+		MinLength: anagramasdk.Int(5),
 	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
@@ -156,7 +156,7 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 
 func TestRetryAfterMs(t *testing.T) {
 	attempts := 0
-	client := anagrama.NewClient(
+	client := anagramasdk.NewClient(
 		option.WithAPIKey("My API Key"),
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
@@ -172,10 +172,10 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Words.GetRandom(context.Background(), anagrama.WordGetRandomParams{
-		Count:     anagrama.Int(3),
-		MaxLength: anagrama.Int(8),
-		MinLength: anagrama.Int(5),
+	_, err := client.Words.GetRandom(context.Background(), anagramasdk.WordGetRandomParams{
+		Count:     anagramasdk.Int(3),
+		MaxLength: anagramasdk.Int(8),
+		MinLength: anagramasdk.Int(5),
 	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
@@ -186,7 +186,7 @@ func TestRetryAfterMs(t *testing.T) {
 }
 
 func TestContextCancel(t *testing.T) {
-	client := anagrama.NewClient(
+	client := anagramasdk.NewClient(
 		option.WithAPIKey("My API Key"),
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
@@ -199,10 +199,10 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	_, err := client.Words.GetRandom(cancelCtx, anagrama.WordGetRandomParams{
-		Count:     anagrama.Int(3),
-		MaxLength: anagrama.Int(8),
-		MinLength: anagrama.Int(5),
+	_, err := client.Words.GetRandom(cancelCtx, anagramasdk.WordGetRandomParams{
+		Count:     anagramasdk.Int(3),
+		MaxLength: anagramasdk.Int(8),
+		MinLength: anagramasdk.Int(5),
 	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
@@ -210,7 +210,7 @@ func TestContextCancel(t *testing.T) {
 }
 
 func TestContextCancelDelay(t *testing.T) {
-	client := anagrama.NewClient(
+	client := anagramasdk.NewClient(
 		option.WithAPIKey("My API Key"),
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
@@ -223,10 +223,10 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	_, err := client.Words.GetRandom(cancelCtx, anagrama.WordGetRandomParams{
-		Count:     anagrama.Int(3),
-		MaxLength: anagrama.Int(8),
-		MinLength: anagrama.Int(5),
+	_, err := client.Words.GetRandom(cancelCtx, anagramasdk.WordGetRandomParams{
+		Count:     anagramasdk.Int(3),
+		MaxLength: anagramasdk.Int(8),
+		MinLength: anagramasdk.Int(5),
 	})
 	if err == nil {
 		t.Error("expected there to be a cancel error")
@@ -242,7 +242,7 @@ func TestContextDeadline(t *testing.T) {
 	defer cancel()
 
 	go func() {
-		client := anagrama.NewClient(
+		client := anagramasdk.NewClient(
 			option.WithAPIKey("My API Key"),
 			option.WithHTTPClient(&http.Client{
 				Transport: &closureTransport{
@@ -253,10 +253,10 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		_, err := client.Words.GetRandom(deadlineCtx, anagrama.WordGetRandomParams{
-			Count:     anagrama.Int(3),
-			MaxLength: anagrama.Int(8),
-			MinLength: anagrama.Int(5),
+		_, err := client.Words.GetRandom(deadlineCtx, anagramasdk.WordGetRandomParams{
+			Count:     anagramasdk.Int(3),
+			MaxLength: anagramasdk.Int(8),
+			MinLength: anagramasdk.Int(5),
 		})
 		if err == nil {
 			t.Error("expected there to be a deadline error")
