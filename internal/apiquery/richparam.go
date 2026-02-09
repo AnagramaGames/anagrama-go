@@ -1,7 +1,7 @@
 package apiquery
 
 import (
-	"github.com/AnagramaGames/anagrama-go/packages/param"
+	"github.com/stainless-sdks/anagrama-go/packages/param"
 	"reflect"
 )
 

@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package anagrama
+package anagramasdk
 
 import (
-	"github.com/AnagramaGames/anagrama-go/internal/apierror"
-	"github.com/AnagramaGames/anagrama-go/packages/param"
+	"github.com/stainless-sdks/anagrama-go/internal/apierror"
+	"github.com/stainless-sdks/anagrama-go/packages/param"
 )
 
 // aliased to make [param.APIUnion] private when embedding

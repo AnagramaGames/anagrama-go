@@ -3,8 +3,8 @@ package apijson_test
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/AnagramaGames/anagrama-go/internal/apijson"
-	"github.com/AnagramaGames/anagrama-go/packages/param"
+	"github.com/stainless-sdks/anagrama-go/internal/apijson"
+	"github.com/stainless-sdks/anagrama-go/packages/param"
 	"reflect"
 	"testing"
 )

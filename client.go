@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package anagrama
+package anagramasdk
 
 import (
 	"context"
@@ -8,8 +8,8 @@ import (
 	"os"
 	"slices"
 
-	"github.com/AnagramaGames/anagrama-go/internal/requestconfig"
-	"github.com/AnagramaGames/anagrama-go/option"
+	"github.com/stainless-sdks/anagrama-go/internal/requestconfig"
+	"github.com/stainless-sdks/anagrama-go/option"
 )
 
 // Client creates a struct with services and top level methods that help with

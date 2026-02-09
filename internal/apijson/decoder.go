@@ -7,7 +7,7 @@ package apijson
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/AnagramaGames/anagrama-go/packages/param"
+	"github.com/stainless-sdks/anagrama-go/packages/param"
 	"reflect"
 	"strconv"
 	"sync"
