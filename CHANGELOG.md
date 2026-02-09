@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0 (2026-02-09)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/AnagramaGames/anagrama-go/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** api update ([b25b628](https://github.com/AnagramaGames/anagrama-go/commit/b25b628b8b5abebab63379230bab1edc2e4b7926))
+* **api:** api update ([096eb7b](https://github.com/AnagramaGames/anagrama-go/commit/096eb7b3af372e291e26fcd7d1ee2098106427d3))
+* **api:** api update ([c9e6302](https://github.com/AnagramaGames/anagrama-go/commit/c9e6302d689aafafd846f351aee036370ca12652))
+
 ## 0.2.0 (2026-02-09)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/AnagramaGames/anagrama-go/compare/v0.1.0...v0.2.0)
