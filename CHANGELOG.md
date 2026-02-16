@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1 (2026-02-11)
+
+Full Changelog: [v0.4.0...v0.4.1](https://github.com/AnagramaGames/anagrama-go/compare/v0.4.0...v0.4.1)
+
+### Bug Fixes
+
+* **encoder:** correctly serialize NullStruct ([db9d5ea](https://github.com/AnagramaGames/anagrama-go/commit/db9d5eaccec16bd859ceb0ff2dc615c916709626))
+
 ## 0.4.0 (2026-02-09)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/AnagramaGames/anagrama-go/compare/v0.3.0...v0.4.0)
