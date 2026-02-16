@@ -55,20 +55,20 @@ func (r *WordService) Daily(ctx context.Context, query WordDailyParams, opts ...
 // the date to be resolved in the caller's local timezone instead of UTC. Requires
 // a valid API key as a Bearer token. Subject to daily rate limiting (1,000
 // requests/day).
-func (r *WordService) GetDaily(ctx context.Context, body WordGetDailyParams, opts ...option.RequestOption) (res *WordGetDailyResponse, err error) {
+func (r *WordService) GetDaily(ctx context.Context, query WordGetDailyParams, opts ...option.RequestOption) (res *WordGetDailyResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/words/daily"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, body, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }
 
 // Returns one or more random words from the Anagrama word pool. Words can be
 // filtered by length. Requires a valid API key as a Bearer token. Subject to daily
 // rate limiting (1,000 requests/day).
-func (r *WordService) GetRandom(ctx context.Context, body WordGetRandomParams, opts ...option.RequestOption) (res *WordGetRandomResponse, err error) {
+func (r *WordService) GetRandom(ctx context.Context, query WordGetRandomParams, opts ...option.RequestOption) (res *WordGetRandomResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/words/random"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, body, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }
 
@@ -113,6 +113,50 @@ type WordDailyResponse struct {
 // Returns the unmodified JSON received from the API
 func (r WordDailyResponse) RawJSON() string { return r.JSON.raw }
 func (r *WordDailyResponse) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type WordGetDailyResponse struct {
+	// The date (YYYY-MM-DD) for which this word was selected, resolved in the
+	// requested timezone.
+	Date time.Time `json:"date,required" format:"date"`
+	// The IANA timezone used to resolve the date.
+	Timezone string `json:"timezone,required"`
+	// The daily word. Always 5-6 characters long.
+	Word string `json:"word,required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Date        respjson.Field
+		Timezone    respjson.Field
+		Word        respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r WordGetDailyResponse) RawJSON() string { return r.JSON.raw }
+func (r *WordGetDailyResponse) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type WordGetRandomResponse struct {
+	// The number of words returned. May be 0 if no words match the length criteria.
+	Count int64 `json:"count,required"`
+	// Array of random words matching the length criteria.
+	Words []string `json:"words,required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Count       respjson.Field
+		Words       respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r WordGetRandomResponse) RawJSON() string { return r.JSON.raw }
+func (r *WordGetRandomResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 

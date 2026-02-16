@@ -38,7 +38,7 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Words.Random(context.Background(), anagramasdk.WordRandomParams{
+	client.Words.GetRandom(context.Background(), anagramasdk.WordGetRandomParams{
 		Count: anagramasdk.Int(3),
 	})
 	if userAgent != fmt.Sprintf("Anagrama/Go %s", internal.PackageVersion) {
@@ -64,7 +64,7 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Words.Random(context.Background(), anagramasdk.WordRandomParams{
+	_, err := client.Words.GetRandom(context.Background(), anagramasdk.WordGetRandomParams{
 		Count: anagramasdk.Int(3),
 	})
 	if err == nil {
@@ -101,7 +101,7 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeaderDel("X-Stainless-Retry-Count"),
 	)
-	_, err := client.Words.Random(context.Background(), anagramasdk.WordRandomParams{
+	_, err := client.Words.GetRandom(context.Background(), anagramasdk.WordGetRandomParams{
 		Count: anagramasdk.Int(3),
 	})
 	if err == nil {
@@ -133,7 +133,7 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeader("X-Stainless-Retry-Count", "42"),
 	)
-	_, err := client.Words.Random(context.Background(), anagramasdk.WordRandomParams{
+	_, err := client.Words.GetRandom(context.Background(), anagramasdk.WordGetRandomParams{
 		Count: anagramasdk.Int(3),
 	})
 	if err == nil {
@@ -164,7 +164,7 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Words.Random(context.Background(), anagramasdk.WordRandomParams{
+	_, err := client.Words.GetRandom(context.Background(), anagramasdk.WordGetRandomParams{
 		Count: anagramasdk.Int(3),
 	})
 	if err == nil {
@@ -189,7 +189,7 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	_, err := client.Words.Random(cancelCtx, anagramasdk.WordRandomParams{
+	_, err := client.Words.GetRandom(cancelCtx, anagramasdk.WordGetRandomParams{
 		Count: anagramasdk.Int(3),
 	})
 	if err == nil {
@@ -211,7 +211,7 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	_, err := client.Words.Random(cancelCtx, anagramasdk.WordRandomParams{
+	_, err := client.Words.GetRandom(cancelCtx, anagramasdk.WordGetRandomParams{
 		Count: anagramasdk.Int(3),
 	})
 	if err == nil {
@@ -239,7 +239,7 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		_, err := client.Words.Random(deadlineCtx, anagramasdk.WordRandomParams{
+		_, err := client.Words.GetRandom(deadlineCtx, anagramasdk.WordGetRandomParams{
 			Count: anagramasdk.Int(3),
 		})
 		if err == nil {

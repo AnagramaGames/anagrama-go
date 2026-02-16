@@ -56,7 +56,7 @@ func main() {
 	client := anagramasdk.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("ANAGRAMA_API_KEY")
 	)
-	response, err := client.Words.Random(context.TODO(), anagramasdk.WordRandomParams{
+	response, err := client.Words.GetRandom(context.TODO(), anagramasdk.WordGetRandomParams{
 		Count: anagramasdk.Int(1),
 	})
 	if err != nil {
@@ -268,7 +268,7 @@ client := anagramasdk.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Words.Random(context.TODO(), ...,
+client.Words.GetRandom(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -299,7 +299,7 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Words.Random(context.TODO(), anagramasdk.WordRandomParams{
+_, err := client.Words.GetRandom(context.TODO(), anagramasdk.WordGetRandomParams{
 	Count: anagramasdk.Int(3),
 })
 if err != nil {
@@ -326,9 +326,9 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Words.Random(
+client.Words.GetRandom(
 	ctx,
-	anagramasdk.WordRandomParams{
+	anagramasdk.WordGetRandomParams{
 		Count: anagramasdk.Int(3),
 	},
 	// This sets the per-retry timeout
@@ -364,9 +364,9 @@ client := anagramasdk.NewClient(
 )
 
 // Override per-request:
-client.Words.Random(
+client.Words.GetRandom(
 	context.TODO(),
-	anagramasdk.WordRandomParams{
+	anagramasdk.WordGetRandomParams{
 		Count: anagramasdk.Int(3),
 	},
 	option.WithMaxRetries(5),
@@ -381,9 +381,9 @@ you need to examine response headers, status codes, or other details.
 ```go
 // Create a variable to store the HTTP response
 var response *http.Response
-response, err := client.Words.Random(
+response, err := client.Words.GetRandom(
 	context.TODO(),
-	anagramasdk.WordRandomParams{
+	anagramasdk.WordGetRandomParams{
 		Count: anagramasdk.Int(3),
 	},
 	option.WithResponseInto(&response),
