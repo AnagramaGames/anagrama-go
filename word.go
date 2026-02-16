@@ -42,10 +42,10 @@ func NewWordService(opts ...option.RequestOption) (r WordService) {
 // the date to be resolved in the caller's local timezone instead of UTC. Requires
 // a valid API key as a Bearer token. Subject to daily rate limiting (1,000
 // requests/day).
-func (r *WordService) Daily(ctx context.Context, body WordDailyParams, opts ...option.RequestOption) (res *WordDailyResponse, err error) {
+func (r *WordService) Daily(ctx context.Context, query WordDailyParams, opts ...option.RequestOption) (res *WordDailyResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/words/daily"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, body, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }
 
@@ -55,30 +55,30 @@ func (r *WordService) Daily(ctx context.Context, body WordDailyParams, opts ...o
 // the date to be resolved in the caller's local timezone instead of UTC. Requires
 // a valid API key as a Bearer token. Subject to daily rate limiting (1,000
 // requests/day).
-func (r *WordService) GetDaily(ctx context.Context, query WordGetDailyParams, opts ...option.RequestOption) (res *WordGetDailyResponse, err error) {
+func (r *WordService) GetDaily(ctx context.Context, body WordGetDailyParams, opts ...option.RequestOption) (res *WordGetDailyResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/words/daily"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, body, &res, opts...)
 	return
 }
 
 // Returns one or more random words from the Anagrama word pool. Words can be
 // filtered by length. Requires a valid API key as a Bearer token. Subject to daily
 // rate limiting (1,000 requests/day).
-func (r *WordService) GetRandom(ctx context.Context, query WordGetRandomParams, opts ...option.RequestOption) (res *WordGetRandomResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
-	path := "v1/words/random"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
-}
-
-// Returns one or more random words from the Anagrama word pool. Words can be
-// filtered by length. Requires a valid API key as a Bearer token. Subject to daily
-// rate limiting (1,000 requests/day).
-func (r *WordService) Random(ctx context.Context, body WordRandomParams, opts ...option.RequestOption) (res *WordRandomResponse, err error) {
+func (r *WordService) GetRandom(ctx context.Context, body WordGetRandomParams, opts ...option.RequestOption) (res *WordGetRandomResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/words/random"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, body, &res, opts...)
+	return
+}
+
+// Returns one or more random words from the Anagrama word pool. Words can be
+// filtered by length. Requires a valid API key as a Bearer token. Subject to daily
+// rate limiting (1,000 requests/day).
+func (r *WordService) Random(ctx context.Context, query WordRandomParams, opts ...option.RequestOption) (res *WordRandomResponse, err error) {
+	opts = slices.Concat(r.Options, opts)
+	path := "v1/words/random"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }
 
@@ -92,7 +92,7 @@ func (r *WordService) Validate(ctx context.Context, query WordValidateParams, op
 	return
 }
 
-type WordGetDailyResponse struct {
+type WordDailyResponse struct {
 	// The date (YYYY-MM-DD) for which this word was selected, resolved in the
 	// requested timezone.
 	Date time.Time `json:"date,required" format:"date"`
@@ -111,12 +111,12 @@ type WordGetDailyResponse struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r WordGetDailyResponse) RawJSON() string { return r.JSON.raw }
-func (r *WordGetDailyResponse) UnmarshalJSON(data []byte) error {
+func (r WordDailyResponse) RawJSON() string { return r.JSON.raw }
+func (r *WordDailyResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type WordGetRandomResponse struct {
+type WordRandomResponse struct {
 	// The number of words returned. May be 0 if no words match the length criteria.
 	Count int64 `json:"count,required"`
 	// Array of random words matching the length criteria.
@@ -131,8 +131,8 @@ type WordGetRandomResponse struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r WordGetRandomResponse) RawJSON() string { return r.JSON.raw }
-func (r *WordGetRandomResponse) UnmarshalJSON(data []byte) error {
+func (r WordRandomResponse) RawJSON() string { return r.JSON.raw }
+func (r *WordRandomResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
