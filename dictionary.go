@@ -202,7 +202,8 @@ type DictionaryLookupParams struct {
 	Fields param.Opt[string] `query:"fields,omitzero" json:"-"`
 	// ISO 639-1 language code. Defaults to "en" (English).
 	Lang param.Opt[string] `query:"lang,omitzero" json:"-"`
-	// Maximum number of results to return for fuzzy searches. Clamped to [1, 50].
+	// Maximum number of results to return for fuzzy searches. Clamped to [1, 20].
+	// Ignored for exact lookups.
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
 	// Filter results by part of speech (e.g., "noun", "verb", "adjective").
 	Pos param.Opt[string] `query:"pos,omitzero" json:"-"`
