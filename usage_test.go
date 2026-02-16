@@ -25,11 +25,11 @@ func TestUsage(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	t.Skip("Prism tests are disabled")
-	puzzleResponse, err := client.Puzzles.Generate(context.TODO(), anagramasdk.PuzzleGenerateParams{
-		Difficulty: anagramasdk.PuzzleGenerateParamsDifficultyMedium,
+	response, err := client.Words.Random(context.TODO(), anagramasdk.WordRandomParams{
+		Count: anagramasdk.Int(1),
 	})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
-	t.Logf("%+v\n", puzzleResponse.Alts)
+	t.Logf("%+v\n", response.Count)
 }
