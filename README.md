@@ -28,7 +28,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/AnagramaGames/anagrama-go@v0.4.1'
+go get -u 'github.com/AnagramaGames/anagrama-go@v0.5.0'
 ```
 
 <!-- x-release-please-end -->
@@ -56,15 +56,13 @@ func main() {
 	client := anagramasdk.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("ANAGRAMA_API_KEY")
 	)
-	response, err := client.Words.GetRandom(context.TODO(), anagramasdk.WordGetRandomParams{
-		Count:     anagramasdk.Int(3),
-		MaxLength: anagramasdk.Int(8),
-		MinLength: anagramasdk.Int(5),
+	puzzleResponse, err := client.Puzzles.Generate(context.TODO(), anagramasdk.PuzzleGenerateParams{
+		Difficulty: anagramasdk.PuzzleGenerateParamsDifficultyMedium,
 	})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", response.Count)
+	fmt.Printf("%+v\n", puzzleResponse.Alts)
 }
 
 ```
