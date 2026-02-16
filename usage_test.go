@@ -25,7 +25,7 @@ func TestUsage(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	t.Skip("Prism tests are disabled")
-	response, err := client.Words.Random(context.TODO(), anagramasdk.WordRandomParams{
+	response, err := client.Words.GetRandom(context.TODO(), anagramasdk.WordGetRandomParams{
 		Count: anagramasdk.Int(1),
 	})
 	if err != nil {
