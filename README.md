@@ -28,7 +28,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/AnagramaGames/anagrama-go@v0.5.0'
+go get -u 'github.com/AnagramaGames/anagrama-go@v0.6.0'
 ```
 
 <!-- x-release-please-end -->
@@ -56,13 +56,13 @@ func main() {
 	client := anagramasdk.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("ANAGRAMA_API_KEY")
 	)
-	puzzleResponse, err := client.Puzzles.Generate(context.TODO(), anagramasdk.PuzzleGenerateParams{
-		Difficulty: anagramasdk.PuzzleGenerateParamsDifficultyMedium,
+	response, err := client.Words.GetRandom(context.TODO(), anagramasdk.WordGetRandomParams{
+		Count: anagramasdk.Int(1),
 	})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", puzzleResponse.Alts)
+	fmt.Printf("%+v\n", response.Count)
 }
 
 ```
@@ -300,9 +300,7 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
 _, err := client.Words.GetRandom(context.TODO(), anagramasdk.WordGetRandomParams{
-	Count:     anagramasdk.Int(3),
-	MaxLength: anagramasdk.Int(8),
-	MinLength: anagramasdk.Int(5),
+	Count: anagramasdk.Int(3),
 })
 if err != nil {
 	var apierr *anagramasdk.Error
@@ -331,9 +329,7 @@ defer cancel()
 client.Words.GetRandom(
 	ctx,
 	anagramasdk.WordGetRandomParams{
-		Count:     anagramasdk.Int(3),
-		MaxLength: anagramasdk.Int(8),
-		MinLength: anagramasdk.Int(5),
+		Count: anagramasdk.Int(3),
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -371,9 +367,7 @@ client := anagramasdk.NewClient(
 client.Words.GetRandom(
 	context.TODO(),
 	anagramasdk.WordGetRandomParams{
-		Count:     anagramasdk.Int(3),
-		MaxLength: anagramasdk.Int(8),
-		MinLength: anagramasdk.Int(5),
+		Count: anagramasdk.Int(3),
 	},
 	option.WithMaxRetries(5),
 )
@@ -390,9 +384,7 @@ var response *http.Response
 response, err := client.Words.GetRandom(
 	context.TODO(),
 	anagramasdk.WordGetRandomParams{
-		Count:     anagramasdk.Int(3),
-		MaxLength: anagramasdk.Int(8),
-		MinLength: anagramasdk.Int(5),
+		Count: anagramasdk.Int(3),
 	},
 	option.WithResponseInto(&response),
 )

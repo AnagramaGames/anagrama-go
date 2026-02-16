@@ -4,7 +4,6 @@ package anagramasdk
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -52,7 +51,7 @@ func (r *DictionaryService) Languages(ctx context.Context, opts ...option.Reques
 // etymology, part of speech, synonyms, antonyms, and related words. When `exact`
 // is set to `false`, performs a fuzzy search and returns matching candidates.
 // Requires a valid API key as a Bearer token.
-func (r *DictionaryService) Lookup(ctx context.Context, word string, query DictionaryLookupParams, opts ...option.RequestOption) (res *DictionaryLookupResponseUnion, err error) {
+func (r *DictionaryService) Lookup(ctx context.Context, word string, query DictionaryLookupParams, opts ...option.RequestOption) (res *DictionaryLookupResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if word == "" {
 		err = errors.New("missing required word parameter")
@@ -154,60 +153,6 @@ func (r *DictionaryLookupResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Response for a fuzzy dictionary search.
-type DictionarySearchResponse struct {
-	// Total number of results returned.
-	Count int64 `json:"count,required"`
-	// Always `false` for search responses.
-	Exact bool `json:"exact,required"`
-	// The language code used for the search.
-	Lang string `json:"lang,required"`
-	// The original search query.
-	Query string `json:"query,required"`
-	// Matching words from the fuzzy search.
-	Results []DictionarySearchResult `json:"results,required"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Count       respjson.Field
-		Exact       respjson.Field
-		Lang        respjson.Field
-		Query       respjson.Field
-		Results     respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r DictionarySearchResponse) RawJSON() string { return r.JSON.raw }
-func (r *DictionarySearchResponse) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// A single result from a fuzzy dictionary search.
-type DictionarySearchResult struct {
-	// The primary part of speech.
-	Pos string `json:"pos,required"`
-	// The matching word.
-	Word string `json:"word,required"`
-	// A brief definition, or null if unavailable.
-	Gloss string `json:"gloss,nullable"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Pos         respjson.Field
-		Word        respjson.Field
-		Gloss       respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r DictionarySearchResult) RawJSON() string { return r.JSON.raw }
-func (r *DictionarySearchResult) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
 // Information about a supported dictionary language.
 type LanguageInfo struct {
 	// ISO 639-1 language code (e.g., "en", "es", "fr").
@@ -246,77 +191,6 @@ type DictionaryLanguagesResponse struct {
 // Returns the unmodified JSON received from the API
 func (r DictionaryLanguagesResponse) RawJSON() string { return r.JSON.raw }
 func (r *DictionaryLanguagesResponse) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// DictionaryLookupResponseUnion contains all possible properties and values from
-// [DictionaryLookupResponse], [DictionarySearchResponse].
-//
-// Use the methods beginning with 'As' to cast the union to one of its variants.
-type DictionaryLookupResponseUnion struct {
-	Lang string `json:"lang"`
-	// This field is a union of [[]DictionaryEntry], [[]DictionarySearchResult]
-	Results DictionaryLookupResponseUnionResults `json:"results"`
-	// This field is from variant [DictionaryLookupResponse].
-	Word string `json:"word"`
-	// This field is from variant [DictionarySearchResponse].
-	Count int64 `json:"count"`
-	// This field is from variant [DictionarySearchResponse].
-	Exact bool `json:"exact"`
-	// This field is from variant [DictionarySearchResponse].
-	Query string `json:"query"`
-	JSON  struct {
-		Lang    respjson.Field
-		Results respjson.Field
-		Word    respjson.Field
-		Count   respjson.Field
-		Exact   respjson.Field
-		Query   respjson.Field
-		raw     string
-	} `json:"-"`
-}
-
-func (u DictionaryLookupResponseUnion) AsDictionaryLookupResponse() (v DictionaryLookupResponse) {
-	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
-	return
-}
-
-func (u DictionaryLookupResponseUnion) AsDictionarySearchResponse() (v DictionarySearchResponse) {
-	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
-	return
-}
-
-// Returns the unmodified JSON received from the API
-func (u DictionaryLookupResponseUnion) RawJSON() string { return u.JSON.raw }
-
-func (r *DictionaryLookupResponseUnion) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// DictionaryLookupResponseUnionResults is an implicit subunion of
-// [DictionaryLookupResponseUnion]. DictionaryLookupResponseUnionResults provides
-// convenient access to the sub-properties of the union.
-//
-// For type safety it is recommended to directly use a variant of the
-// [DictionaryLookupResponseUnion].
-//
-// If the underlying value is not a json object, one of the following properties
-// will be valid: OfDictionaryEntryArray OfDictionarySearchResultArray]
-type DictionaryLookupResponseUnionResults struct {
-	// This field will be present if the value is a [[]DictionaryEntry] instead of an
-	// object.
-	OfDictionaryEntryArray []DictionaryEntry `json:",inline"`
-	// This field will be present if the value is a [[]DictionarySearchResult] instead
-	// of an object.
-	OfDictionarySearchResultArray []DictionarySearchResult `json:",inline"`
-	JSON                          struct {
-		OfDictionaryEntryArray        respjson.Field
-		OfDictionarySearchResultArray respjson.Field
-		raw                           string
-	} `json:"-"`
-}
-
-func (r *DictionaryLookupResponseUnionResults) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
