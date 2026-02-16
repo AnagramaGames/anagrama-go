@@ -50,7 +50,7 @@ func (r *PuzzleService) Generate(ctx context.Context, query PuzzleGenerateParams
 type PuzzleHint struct {
 	// The letter revealed by this hint.
 	Letter string `json:"letter,required"`
-	// The order in which this hint should be revealed (1-based).
+	// The order in which this hint should be revealed (0-based).
 	Order int64 `json:"order,required"`
 	// The zero-based index of the letter in the target word.
 	Position int64 `json:"position,required"`
