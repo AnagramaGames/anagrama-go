@@ -56,15 +56,13 @@ func main() {
 	client := anagramasdk.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("ANAGRAMA_API_KEY")
 	)
-	response, err := client.Words.GetRandom(context.TODO(), anagramasdk.WordGetRandomParams{
-		Count:     anagramasdk.Int(3),
-		MaxLength: anagramasdk.Int(8),
-		MinLength: anagramasdk.Int(5),
+	puzzleResponse, err := client.Puzzles.Generate(context.TODO(), anagramasdk.PuzzleGenerateParams{
+		Difficulty: anagramasdk.PuzzleGenerateParamsDifficultyMedium,
 	})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", response.Count)
+	fmt.Printf("%+v\n", puzzleResponse.Alts)
 }
 
 ```

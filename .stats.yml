@@ -1,4 +1,4 @@
-configured_endpoints: 6
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/anagramagames%2Fanagrama-fd3ab7277d06c5e12d71c41a79c6355f58933a3ab1590559b0b06b70dd6381b4.yml
-openapi_spec_hash: 9356f8b71ac7e784121fd814c060d46b
-config_hash: 5520d7ebaaac5cf41a6d98e96b2c5d0e
+configured_endpoints: 10
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/anagramagames%2Fanagrama-db23f9f940717d8ed6617d505900295b9ce3e478e7d931a9f3021569bbdcf901.yml
+openapi_spec_hash: 45acab560df8e94cb5d90ceae95c4e05
+config_hash: 5624e4b5ce20d5601b0f7333b3b194c9

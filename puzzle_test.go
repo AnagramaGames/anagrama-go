@@ -4,6 +4,7 @@ package anagramasdk_test
 
 import (
 	"context"
+	"errors"
 	"os"
 	"testing"
 
@@ -12,7 +13,8 @@ import (
 	"github.com/AnagramaGames/anagrama-go/option"
 )
 
-func TestUsage(t *testing.T) {
+func TestPuzzleGenerateWithOptionalParams(t *testing.T) {
+	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -24,12 +26,16 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	t.Skip("Prism tests are disabled")
-	puzzleResponse, err := client.Puzzles.Generate(context.TODO(), anagramasdk.PuzzleGenerateParams{
-		Difficulty: anagramasdk.PuzzleGenerateParamsDifficultyMedium,
+	_, err := client.Puzzles.Generate(context.TODO(), anagramasdk.PuzzleGenerateParams{
+		Difficulty: anagramasdk.PuzzleGenerateParamsDifficultyEasy,
+		HardMode:   anagramasdk.PuzzleGenerateParamsHardModeTrue,
+		Seed:       anagramasdk.String("seed"),
 	})
 	if err != nil {
+		var apierr *anagramasdk.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
-	t.Logf("%+v\n", puzzleResponse.Alts)
 }

@@ -16,10 +16,12 @@ import (
 // interacting with the anagrama API. You should not instantiate this client
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
-	Options  []option.RequestOption
-	Words    WordService
-	Wordsets WordsetService
-	Cli      CliService
+	Options    []option.RequestOption
+	Words      WordService
+	Puzzles    PuzzleService
+	Dictionary DictionaryService
+	Wordsets   WordsetService
+	Cli        CliService
 }
 
 // DefaultClientOptions read from the environment (ANAGRAMA_API_KEY,
@@ -45,6 +47,8 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 	r = Client{Options: opts}
 
 	r.Words = NewWordService(opts...)
+	r.Puzzles = NewPuzzleService(opts...)
+	r.Dictionary = NewDictionaryService(opts...)
 	r.Wordsets = NewWordsetService(opts...)
 	r.Cli = NewCliService(opts...)
 
