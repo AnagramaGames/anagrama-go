@@ -80,9 +80,9 @@ func (r *CliAuthService) Start(ctx context.Context, body CliAuthStartParams, opt
 
 type CliAuthCompleteResponse struct {
 	// Always `true` on success.
-	Ok bool `json:"ok,required"`
+	Ok bool `json:"ok" api:"required"`
 	// The resulting session status.
-	Status constant.Approved `json:"status,required"`
+	Status constant.Approved `json:"status" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Ok          respjson.Field
@@ -101,11 +101,11 @@ func (r *CliAuthCompleteResponse) UnmarshalJSON(data []byte) error {
 type CliAuthPollResponse struct {
 	// The API token (prefixed with `cli_`). Store this securely and use it as a Bearer
 	// token for authenticated API calls.
-	Token string `json:"token,required"`
+	Token string `json:"token" api:"required"`
 	// The session status. Always `"approved"` for a 200 response.
-	Status constant.Approved `json:"status,required"`
+	Status constant.Approved `json:"status" api:"required"`
 	// Basic profile information for the authenticated user.
-	User CliAuthPollResponseUser `json:"user,required"`
+	User CliAuthPollResponseUser `json:"user" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Token       respjson.Field
@@ -126,11 +126,11 @@ func (r *CliAuthPollResponse) UnmarshalJSON(data []byte) error {
 type CliAuthPollResponseUser struct {
 	// The user's display name. Falls back to username, first name, last name, or
 	// "Player".
-	DisplayName string `json:"displayName,required"`
+	DisplayName string `json:"displayName" api:"required"`
 	// The user's unique identifier.
-	UserID string `json:"userId,required"`
+	UserID string `json:"userId" api:"required"`
 	// The user's username, or null if not set.
-	Username string `json:"username,required"`
+	Username string `json:"username" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		DisplayName respjson.Field
@@ -150,18 +150,18 @@ func (r *CliAuthPollResponseUser) UnmarshalJSON(data []byte) error {
 type CliAuthStartResponse struct {
 	// Unique device code for this authentication session. Used when polling for
 	// approval.
-	DeviceCode string `json:"device_code,required"`
+	DeviceCode string `json:"device_code" api:"required"`
 	// Number of seconds until this authentication session expires. Default is 900 (15
 	// minutes).
-	ExpiresIn int64 `json:"expires_in,required"`
+	ExpiresIn int64 `json:"expires_in" api:"required"`
 	// Minimum number of seconds the CLI should wait between poll requests. Default
 	// is 3.
-	Interval int64 `json:"interval,required"`
+	Interval int64 `json:"interval" api:"required"`
 	// A short, human-readable code displayed to the user for verification.
-	UserCode string `json:"user_code,required"`
+	UserCode string `json:"user_code" api:"required"`
 	// The full URL the user should visit to authorize the CLI. Includes the
 	// device_code and user_code as query parameters.
-	VerificationURL string `json:"verification_url,required" format:"uri"`
+	VerificationURL string `json:"verification_url" api:"required" format:"uri"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		DeviceCode      respjson.Field
