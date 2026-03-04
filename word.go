@@ -17,6 +17,10 @@ import (
 	"github.com/AnagramaGames/anagrama-go/packages/respjson"
 )
 
+// Fetch random words and the daily word from the Anagrama word pool. All endpoints
+// require API key authentication and are subject to daily rate limits (1,000
+// requests/day per key).
+//
 // WordService contains methods and other services that help with interacting with
 // the anagrama API.
 //

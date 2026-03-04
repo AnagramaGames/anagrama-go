@@ -15,6 +15,9 @@ import (
 	"github.com/AnagramaGames/anagrama-go/shared/constant"
 )
 
+// CLI device-flow authentication. Used by the Anagrama CLI and SDKs to obtain an
+// API token by having the user authorize via the web browser.
+//
 // CliAuthService contains methods and other services that help with interacting
 // with the anagrama API.
 //

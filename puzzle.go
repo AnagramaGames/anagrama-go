@@ -16,6 +16,10 @@ import (
 	"github.com/AnagramaGames/anagrama-go/packages/respjson"
 )
 
+// Generate anagram puzzles with configurable difficulty. Returns scrambled words,
+// hints, alternative solutions, and metadata for building interactive puzzle
+// experiences.
+//
 // PuzzleService contains methods and other services that help with interacting
 // with the anagrama API.
 //

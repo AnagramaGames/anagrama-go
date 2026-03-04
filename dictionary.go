@@ -18,6 +18,10 @@ import (
 	"github.com/AnagramaGames/anagrama-go/packages/respjson"
 )
 
+// Word definitions, etymology, and linguistic data across languages. Look up
+// detailed dictionary entries or search for words by part of speech and other
+// criteria.
+//
 // DictionaryService contains methods and other services that help with interacting
 // with the anagrama API.
 //

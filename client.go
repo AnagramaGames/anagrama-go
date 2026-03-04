@@ -16,12 +16,23 @@ import (
 // interacting with the anagrama API. You should not instantiate this client
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
-	Options    []option.RequestOption
-	Words      WordService
-	Puzzles    PuzzleService
+	Options []option.RequestOption
+	// Fetch random words and the daily word from the Anagrama word pool. All endpoints
+	// require API key authentication and are subject to daily rate limits (1,000
+	// requests/day per key).
+	Words WordService
+	// Generate anagram puzzles with configurable difficulty. Returns scrambled words,
+	// hints, alternative solutions, and metadata for building interactive puzzle
+	// experiences.
+	Puzzles PuzzleService
+	// Word definitions, etymology, and linguistic data across languages. Look up
+	// detailed dictionary entries or search for words by part of speech and other
+	// criteria.
 	Dictionary DictionaryService
-	Wordsets   WordsetService
-	Cli        CliService
+	// Access user-created word collections (wordsets). Public wordsets can be read
+	// without authentication. Private wordsets require the creator's API key.
+	Wordsets WordsetService
+	Cli      CliService
 }
 
 // DefaultClientOptions read from the environment (ANAGRAMA_API_KEY,
