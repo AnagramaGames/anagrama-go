@@ -14,7 +14,9 @@ import (
 // the [NewCliService] method instead.
 type CliService struct {
 	Options []option.RequestOption
-	Auth    CliAuthService
+	// CLI device-flow authentication. Used by the Anagrama CLI and SDKs to obtain an
+	// API token by having the user authorize via the web browser.
+	Auth CliAuthService
 }
 
 // NewCliService generates a new service that applies the given options to each

@@ -19,6 +19,9 @@ import (
 	"github.com/AnagramaGames/anagrama-go/packages/respjson"
 )
 
+// Access user-created word collections (wordsets). Public wordsets can be read
+// without authentication. Private wordsets require the creator's API key.
+//
 // WordsetService contains methods and other services that help with interacting
 // with the anagrama API.
 //
