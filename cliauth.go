@@ -48,7 +48,7 @@ func (r *CliAuthService) Complete(ctx context.Context, body CliAuthCompleteParam
 	opts = slices.Concat(r.Options, opts)
 	path := "cli/auth/complete"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Polls the status of a device-flow authentication session. The CLI should call
@@ -64,7 +64,7 @@ func (r *CliAuthService) Poll(ctx context.Context, body CliAuthPollParams, opts 
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "cli/auth/poll"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Initiates a device-flow authentication session. Returns a device code, a
@@ -78,7 +78,7 @@ func (r *CliAuthService) Start(ctx context.Context, body CliAuthStartParams, opt
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "cli/auth/start"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type CliAuthCompleteResponse struct {

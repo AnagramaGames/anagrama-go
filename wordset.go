@@ -52,11 +52,11 @@ func (r *WordsetService) Get(ctx context.Context, wordsetID string, query Wordse
 	opts = slices.Concat(r.Options, opts)
 	if wordsetID == "" {
 		err = errors.New("missing required wordsetId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("v1/wordsets/%s", url.PathEscape(wordsetID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // A wordset with its words, optionally filtered and/or scrambled.

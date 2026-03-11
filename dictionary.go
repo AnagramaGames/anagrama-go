@@ -48,7 +48,7 @@ func (r *DictionaryService) Languages(ctx context.Context, opts ...option.Reques
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/dictionary/languages"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieves detailed dictionary entries for a word, including definitions,
@@ -59,11 +59,11 @@ func (r *DictionaryService) Lookup(ctx context.Context, word string, query Dicti
 	opts = slices.Concat(r.Options, opts)
 	if word == "" {
 		err = errors.New("missing required word parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("v1/dictionary/%s", url.PathEscape(word))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // A single definition of a word with an optional usage example.
