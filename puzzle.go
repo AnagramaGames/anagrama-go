@@ -47,7 +47,7 @@ func (r *PuzzleService) Generate(ctx context.Context, query PuzzleGenerateParams
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/puzzles/generate"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // A positional hint revealing one letter of the target word.

@@ -50,7 +50,7 @@ func (r *WordService) Daily(ctx context.Context, query WordDailyParams, opts ...
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/words/daily"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // Returns a deterministic daily word that is the same for all users on a given
@@ -63,7 +63,7 @@ func (r *WordService) GetDaily(ctx context.Context, query WordGetDailyParams, op
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/words/daily"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // Returns one or more random words from the Anagrama word pool. Words can be
@@ -73,7 +73,7 @@ func (r *WordService) GetRandom(ctx context.Context, query WordGetRandomParams, 
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/words/random"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // Returns one or more random words from the Anagrama word pool. Words can be
@@ -83,7 +83,7 @@ func (r *WordService) Random(ctx context.Context, query WordRandomParams, opts .
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/words/random"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // Checks whether a given word exists in the Anagrama dictionary for the specified
@@ -93,7 +93,7 @@ func (r *WordService) Validate(ctx context.Context, query WordValidateParams, op
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/words/validate"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 type WordDailyResponse struct {
