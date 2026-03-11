@@ -38,7 +38,7 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Words.GetRandom(context.Background(), anagramasdk.WordGetRandomParams{
+	_, _ = client.Words.GetRandom(context.Background(), anagramasdk.WordGetRandomParams{
 		Count: anagramasdk.Int(3),
 	})
 	if userAgent != fmt.Sprintf("Anagrama/Go %s", internal.PackageVersion) {
