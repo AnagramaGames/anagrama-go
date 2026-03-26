@@ -85,7 +85,7 @@ type CliAuthCompleteResponse struct {
 	// Always `true` on success.
 	Ok bool `json:"ok" api:"required"`
 	// The resulting session status.
-	Status constant.Approved `json:"status" api:"required"`
+	Status constant.Approved `json:"status" default:"approved"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Ok          respjson.Field
@@ -106,7 +106,7 @@ type CliAuthPollResponse struct {
 	// token for authenticated API calls.
 	Token string `json:"token" api:"required"`
 	// The session status. Always `"approved"` for a 200 response.
-	Status constant.Approved `json:"status" api:"required"`
+	Status constant.Approved `json:"status" default:"approved"`
 	// Basic profile information for the authenticated user.
 	User CliAuthPollResponseUser `json:"user" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
