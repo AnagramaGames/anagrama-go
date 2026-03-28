@@ -19,6 +19,9 @@ import (
 	"github.com/AnagramaGames/anagrama-go/packages/respjson"
 )
 
+// Access user-created word collections (wordsets). Public wordsets can be read
+// without authentication. Private wordsets require the creator's API key.
+//
 // WordsetService contains methods and other services that help with interacting
 // with the anagrama API.
 //
@@ -49,32 +52,32 @@ func (r *WordsetService) Get(ctx context.Context, wordsetID string, query Wordse
 	opts = slices.Concat(r.Options, opts)
 	if wordsetID == "" {
 		err = errors.New("missing required wordsetId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("v1/wordsets/%s", url.PathEscape(wordsetID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // A wordset with its words, optionally filtered and/or scrambled.
 type WordsetResponse struct {
 	// ISO 8601 timestamp of when the wordset was created.
-	CreatedAt time.Time `json:"createdAt,required" format:"date-time"`
+	CreatedAt time.Time `json:"createdAt" api:"required" format:"date-time"`
 	// A description of the wordset.
-	Description string `json:"description,required"`
+	Description string `json:"description" api:"required"`
 	// Whether the wordset is publicly accessible.
-	IsPublic bool `json:"isPublic,required"`
+	IsPublic bool `json:"isPublic" api:"required"`
 	// The name of the wordset.
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// The total number of words in the wordset (before filtering).
-	TotalWordCount int64 `json:"totalWordCount,required"`
+	TotalWordCount int64 `json:"totalWordCount" api:"required"`
 	// The number of words in the `words` array (after filtering).
-	WordCount int64 `json:"wordCount,required"`
+	WordCount int64 `json:"wordCount" api:"required"`
 	// The list of words in the wordset, after applying any query filters (minLength,
 	// maxLength, category, random, limit, scramble).
-	Words []WordsetWord `json:"words,required"`
+	Words []WordsetWord `json:"words" api:"required"`
 	// The unique wordset identifier.
-	WordsetID string `json:"wordsetId,required"`
+	WordsetID string `json:"wordsetId" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		CreatedAt      respjson.Field
@@ -99,7 +102,7 @@ func (r *WordsetResponse) UnmarshalJSON(data []byte) error {
 // A word entry in a wordset.
 type WordsetWord struct {
 	// The word string. If `scramble=true` was requested, the letters are shuffled.
-	Word string `json:"word,required"`
+	Word string `json:"word" api:"required"`
 	// An optional category label for the word (e.g., "animals", "food").
 	Category string `json:"category"`
 	// An optional hint or clue for the word.

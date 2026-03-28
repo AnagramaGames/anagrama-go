@@ -17,6 +17,10 @@ import (
 	"github.com/AnagramaGames/anagrama-go/packages/respjson"
 )
 
+// Fetch random words and the daily word from the Anagrama word pool. All endpoints
+// require API key authentication and are subject to daily rate limits (1,000
+// requests/day per key).
+//
 // WordService contains methods and other services that help with interacting with
 // the anagrama API.
 //
@@ -46,7 +50,7 @@ func (r *WordService) Daily(ctx context.Context, query WordDailyParams, opts ...
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/words/daily"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // Returns a deterministic daily word that is the same for all users on a given
@@ -59,7 +63,7 @@ func (r *WordService) GetDaily(ctx context.Context, query WordGetDailyParams, op
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/words/daily"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // Returns one or more random words from the Anagrama word pool. Words can be
@@ -69,7 +73,7 @@ func (r *WordService) GetRandom(ctx context.Context, query WordGetRandomParams, 
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/words/random"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // Returns one or more random words from the Anagrama word pool. Words can be
@@ -79,7 +83,7 @@ func (r *WordService) Random(ctx context.Context, query WordRandomParams, opts .
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/words/random"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // Checks whether a given word exists in the Anagrama dictionary for the specified
@@ -89,17 +93,17 @@ func (r *WordService) Validate(ctx context.Context, query WordValidateParams, op
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/words/validate"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 type WordDailyResponse struct {
 	// The date (YYYY-MM-DD) for which this word was selected, resolved in the
 	// requested timezone.
-	Date time.Time `json:"date,required" format:"date"`
+	Date time.Time `json:"date" api:"required" format:"date"`
 	// The IANA timezone used to resolve the date.
-	Timezone string `json:"timezone,required"`
+	Timezone string `json:"timezone" api:"required"`
 	// The daily word. Always 5-6 characters long.
-	Word string `json:"word,required"`
+	Word string `json:"word" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Date        respjson.Field
@@ -119,11 +123,11 @@ func (r *WordDailyResponse) UnmarshalJSON(data []byte) error {
 type WordGetDailyResponse struct {
 	// The date (YYYY-MM-DD) for which this word was selected, resolved in the
 	// requested timezone.
-	Date time.Time `json:"date,required" format:"date"`
+	Date time.Time `json:"date" api:"required" format:"date"`
 	// The IANA timezone used to resolve the date.
-	Timezone string `json:"timezone,required"`
+	Timezone string `json:"timezone" api:"required"`
 	// The daily word. Always 5-6 characters long.
-	Word string `json:"word,required"`
+	Word string `json:"word" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Date        respjson.Field
@@ -142,9 +146,9 @@ func (r *WordGetDailyResponse) UnmarshalJSON(data []byte) error {
 
 type WordGetRandomResponse struct {
 	// The number of words returned. May be 0 if no words match the length criteria.
-	Count int64 `json:"count,required"`
+	Count int64 `json:"count" api:"required"`
 	// Array of random words matching the length criteria.
-	Words []string `json:"words,required"`
+	Words []string `json:"words" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Count       respjson.Field
@@ -162,9 +166,9 @@ func (r *WordGetRandomResponse) UnmarshalJSON(data []byte) error {
 
 type WordRandomResponse struct {
 	// The number of words returned. May be 0 if no words match the length criteria.
-	Count int64 `json:"count,required"`
+	Count int64 `json:"count" api:"required"`
 	// Array of random words matching the length criteria.
-	Words []string `json:"words,required"`
+	Words []string `json:"words" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Count       respjson.Field
@@ -182,11 +186,11 @@ func (r *WordRandomResponse) UnmarshalJSON(data []byte) error {
 
 type WordValidateResponse struct {
 	// The language code used for validation.
-	Lang string `json:"lang,required"`
+	Lang string `json:"lang" api:"required"`
 	// Whether the word exists in the dictionary for the specified language.
-	Valid bool `json:"valid,required"`
+	Valid bool `json:"valid" api:"required"`
 	// The word that was validated (lowercased).
-	Word string `json:"word,required"`
+	Word string `json:"word" api:"required"`
 	// The primary part of speech for the word, if found (e.g., "noun", "verb",
 	// "adjective").
 	Pos string `json:"pos"`
@@ -277,7 +281,7 @@ func (r WordRandomParams) URLQuery() (v url.Values, err error) {
 
 type WordValidateParams struct {
 	// The word to validate. Case-insensitive. Must be 1-100 characters.
-	Word string `query:"word,required" json:"-"`
+	Word string `query:"word" api:"required" json:"-"`
 	// ISO 639-1 language code to validate against. Defaults to "en" (English).
 	Lang param.Opt[string] `query:"lang,omitzero" json:"-"`
 	paramObj

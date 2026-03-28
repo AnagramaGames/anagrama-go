@@ -18,6 +18,10 @@ import (
 	"github.com/AnagramaGames/anagrama-go/packages/respjson"
 )
 
+// Word definitions, etymology, and linguistic data across languages. Look up
+// detailed dictionary entries or search for words by part of speech and other
+// criteria.
+//
 // DictionaryService contains methods and other services that help with interacting
 // with the anagrama API.
 //
@@ -44,7 +48,7 @@ func (r *DictionaryService) Languages(ctx context.Context, opts ...option.Reques
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/dictionary/languages"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieves detailed dictionary entries for a word, including definitions,
@@ -55,17 +59,17 @@ func (r *DictionaryService) Lookup(ctx context.Context, word string, query Dicti
 	opts = slices.Concat(r.Options, opts)
 	if word == "" {
 		err = errors.New("missing required word parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("v1/dictionary/%s", url.PathEscape(word))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // A single definition of a word with an optional usage example.
 type DictionaryDefinition struct {
 	// The definition text.
-	Gloss string `json:"gloss,required"`
+	Gloss string `json:"gloss" api:"required"`
 	// An example sentence demonstrating usage.
 	Example string `json:"example"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -87,7 +91,7 @@ func (r *DictionaryDefinition) UnmarshalJSON(data []byte) error {
 // etymology, and related words.
 type DictionaryEntry struct {
 	// Part of speech (e.g., "noun", "verb", "adjective").
-	Pos string `json:"pos,required"`
+	Pos string `json:"pos" api:"required"`
 	// Words with opposite meaning.
 	Antonyms []string `json:"antonyms"`
 	// Definitions for this part of speech.
@@ -132,11 +136,11 @@ func (r *DictionaryEntry) UnmarshalJSON(data []byte) error {
 // Response for an exact dictionary word lookup.
 type DictionaryLookupResponse struct {
 	// The language code used for the lookup.
-	Lang string `json:"lang,required"`
+	Lang string `json:"lang" api:"required"`
 	// Dictionary entries for the word, one per part of speech.
-	Results []DictionaryEntry `json:"results,required"`
+	Results []DictionaryEntry `json:"results" api:"required"`
 	// The word that was looked up.
-	Word string `json:"word,required"`
+	Word string `json:"word" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Lang        respjson.Field
@@ -156,9 +160,9 @@ func (r *DictionaryLookupResponse) UnmarshalJSON(data []byte) error {
 // Information about a supported dictionary language.
 type LanguageInfo struct {
 	// ISO 639-1 language code (e.g., "en", "es", "fr").
-	Code string `json:"code,required"`
+	Code string `json:"code" api:"required"`
 	// Number of dictionary entries available for this language.
-	Entries int64 `json:"entries,required"`
+	Entries int64 `json:"entries" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Code        respjson.Field
@@ -176,9 +180,9 @@ func (r *LanguageInfo) UnmarshalJSON(data []byte) error {
 
 type DictionaryLanguagesResponse struct {
 	// Total number of available languages.
-	Count int64 `json:"count,required"`
+	Count int64 `json:"count" api:"required"`
 	// Array of available languages with entry counts.
-	Languages []LanguageInfo `json:"languages,required"`
+	Languages []LanguageInfo `json:"languages" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Count       respjson.Field

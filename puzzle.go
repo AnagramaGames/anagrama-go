@@ -16,6 +16,10 @@ import (
 	"github.com/AnagramaGames/anagrama-go/packages/respjson"
 )
 
+// Generate anagram puzzles with configurable difficulty. Returns scrambled words,
+// hints, alternative solutions, and metadata for building interactive puzzle
+// experiences.
+//
 // PuzzleService contains methods and other services that help with interacting
 // with the anagrama API.
 //
@@ -43,17 +47,17 @@ func (r *PuzzleService) Generate(ctx context.Context, query PuzzleGenerateParams
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/puzzles/generate"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // A positional hint revealing one letter of the target word.
 type PuzzleHint struct {
 	// The letter revealed by this hint.
-	Letter string `json:"letter,required"`
+	Letter string `json:"letter" api:"required"`
 	// The order in which this hint should be revealed (0-based).
-	Order int64 `json:"order,required"`
+	Order int64 `json:"order" api:"required"`
 	// The zero-based index of the letter in the target word.
-	Position int64 `json:"position,required"`
+	Position int64 `json:"position" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Letter      respjson.Field
@@ -73,13 +77,13 @@ func (r *PuzzleHint) UnmarshalJSON(data []byte) error {
 // Metadata about the generated puzzle for analytics and difficulty calibration.
 type PuzzleMetadata struct {
 	// Number of alternative valid solutions.
-	AltCount int64 `json:"altCount,required"`
+	AltCount int64 `json:"altCount" api:"required"`
 	// Whether the target word contains repeated letters.
-	HasRepeats bool `json:"hasRepeats,required"`
+	HasRepeats bool `json:"hasRepeats" api:"required"`
 	// Number of unique letters in the letter pool.
-	PoolSize int64 `json:"poolSize,required"`
+	PoolSize int64 `json:"poolSize" api:"required"`
 	// Number of vowels in the target word.
-	VowelCount int64 `json:"vowelCount,required"`
+	VowelCount int64 `json:"vowelCount" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		AltCount    respjson.Field
@@ -101,35 +105,35 @@ func (r *PuzzleMetadata) UnmarshalJSON(data []byte) error {
 // metadata.
 type PuzzleResponse struct {
 	// Alternative valid anagram solutions.
-	Alts []string `json:"alts,required"`
+	Alts []string `json:"alts" api:"required"`
 	// Definitions for the target word and alternatives. Keys are words, values are
 	// definition strings or null if no definition is available.
-	Definitions map[string]string `json:"definitions,required"`
+	Definitions map[string]string `json:"definitions" api:"required"`
 	// The difficulty level of the puzzle.
 	//
 	// Any of "easy", "medium", "hard".
-	Difficulty PuzzleResponseDifficulty `json:"difficulty,required"`
+	Difficulty PuzzleResponseDifficulty `json:"difficulty" api:"required"`
 	// The feedback mode for guesses (e.g., "exact", "positional").
-	FeedbackMode string `json:"feedbackMode,required"`
+	FeedbackMode string `json:"feedbackMode" api:"required"`
 	// Pre-generated hints revealing individual letters.
-	Hints []PuzzleHint `json:"hints,required"`
+	Hints []PuzzleHint `json:"hints" api:"required"`
 	// Maximum number of attempts allowed.
-	MaxAttempts int64 `json:"maxAttempts,required"`
+	MaxAttempts int64 `json:"maxAttempts" api:"required"`
 	// Maximum number of hints available.
-	MaxHints int64 `json:"maxHints,required"`
+	MaxHints int64 `json:"maxHints" api:"required"`
 	// Metadata about the generated puzzle for analytics and difficulty calibration.
-	Metadata PuzzleMetadata `json:"metadata,required"`
+	Metadata PuzzleMetadata `json:"metadata" api:"required"`
 	// The sorted pool of available letters.
-	Pool string `json:"pool,required"`
+	Pool string `json:"pool" api:"required"`
 	// The scrambled version of the target word.
-	Scramble string `json:"scramble,required"`
+	Scramble string `json:"scramble" api:"required"`
 	// The seed used for puzzle generation. Can be passed back to reproduce this exact
 	// puzzle.
-	Seed string `json:"seed,required"`
+	Seed string `json:"seed" api:"required"`
 	// The target word the player must unscramble.
-	Target string `json:"target,required"`
+	Target string `json:"target" api:"required"`
 	// The length of the target word.
-	WordLength int64 `json:"wordLength,required"`
+	WordLength int64 `json:"wordLength" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Alts         respjson.Field
